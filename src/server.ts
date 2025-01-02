@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
 import cors from 'cors';
+import routes from './api/routes'; // Import combined routes
 
 import { HttpCode, ONE_HUNDRED, ONE_THOUSAND, SIXTY } from './core/constants';
 import requestLogger from './api/middlewares/requestLogger';
@@ -54,6 +55,8 @@ export class Server {
 	}
 
 	private initializeRoutes(): void {
+		this.app.use('', routes);
+
 		// Test REST API endpoint
 		this.app.get('/', (_req: Request, res: Response) => {
 			res.status(HttpCode.OK).send({
