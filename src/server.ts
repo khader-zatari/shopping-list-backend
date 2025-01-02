@@ -4,6 +4,7 @@ import rateLimit from 'express-rate-limit';
 import cors from 'cors';
 
 import { HttpCode, ONE_HUNDRED, ONE_THOUSAND, SIXTY } from './core/constants';
+import requestLogger from './api/middlewares/requestLogger';
 
 interface ServerOptions {
 	port: number;
@@ -34,6 +35,7 @@ export class Server {
 
 		// Parse JSON in request body (allow raw)
 		this.app.use(express.json());
+		this.app.use(requestLogger);
 
 		// Allow x-www-form-urlencoded
 		this.app.use(express.urlencoded({ extended: true }));
