@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
+import cors from 'cors';
 
 import { HttpCode, ONE_HUNDRED, ONE_THOUSAND, SIXTY } from './core/constants';
 
@@ -22,6 +23,15 @@ export class Server {
 	}
 
 	private initializeMiddlewares(): void {
+		// Enable CORS
+		this.app.use(
+			cors({
+				origin: '*', // Replace with your frontend URL
+				methods: ['GET', 'POST', 'PUT', 'DELETE'],
+				allowedHeaders: ['Content-Type', 'Authorization']
+			})
+		);
+
 		// Parse JSON in request body (allow raw)
 		this.app.use(express.json());
 
